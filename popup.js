@@ -11,15 +11,6 @@ const timerDisplay = document.getElementById('timer');
 
 let isWork = true;
 
-// Debounce helper function
-function debounce(func, delay) {
-  let timeoutId;
-  return function(...args) {
-    clearTimeout(timeoutId);
-    timeoutId = setTimeout(() => func.apply(this, args), delay);
-  };
-}
-
 function getDuration() {
   const workMinutes = parseInt(workMinutesInput.value) || 0;
   const workSeconds = parseInt(workSecondsInput.value) || 0;
@@ -86,15 +77,13 @@ const inputs = [
   breakSecondsInput
 ];
 
-const debouncedReset = debounce(() => {
-  const durations = getDuration();
-  const duration = isWork ? durations.workDuration : durations.breakDuration;
-  chrome.runtime.sendMessage({ command: 'reset', duration, isWork });
-  updateTimerDisplay(duration);
-}, 500);
-
 inputs.forEach(input => {
-  input.addEventListener('input', debouncedReset);
+  input.addEventListener('input', () => {
+    const durations = getDuration();
+    const duration = isWork ? durations.workDuration : durations.breakDuration;
+    chrome.runtime.sendMessage({ command: 'reset', duration, isWork });
+    updateTimerDisplay(duration);
+  });
 });
 
 // Update timer display every second
