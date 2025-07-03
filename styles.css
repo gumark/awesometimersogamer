@@ -24,15 +24,21 @@ label {
   text-align: left;
 }
 
+.time-input {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 5px;
+  margin-bottom: 15px;
+}
+
 input[type="number"] {
   width: 60px;
   padding: 6px;
-  margin-top: 5px;
   font-size: 16px;
   border: 1px solid #aaa;
   border-radius: 4px;
   text-align: center;
-  margin-right: 10px;
 }
 
 #timer {

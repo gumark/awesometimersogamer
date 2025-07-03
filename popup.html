@@ -10,15 +10,17 @@
   <div class="container">
     <h1>Pomodoro Timer</h1>
 
-    <label for="workTime">Work (minutes):</label>
-    <input id="workTime" type="number" min="0" max="180" value="25" />
-    <label for="workSeconds">Work (seconds):</label>
-    <input id="workSeconds" type="number" min="0" max="59" value="0" />
+    <label>Work Time:</label>
+    <div class="time-input">
+      <input id="workTime" type="number" min="0" max="180" value="25" placeholder="min" />
+      <input id="workSeconds" type="number" min="0" max="59" value="0" placeholder="sec" />
+    </div>
 
-    <label for="breakTime">Break (minutes):</label>
-    <input id="breakTime" type="number" min="0" max="60" value="5" />
-    <label for="breakSeconds">Break (seconds):</label>
-    <input id="breakSeconds" type="number" min="0" max="59" value="0" />
+    <label>Break Time:</label>
+    <div class="time-input">
+      <input id="breakTime" type="number" min="0" max="60" value="5" placeholder="min" />
+      <input id="breakSeconds" type="number" min="0" max="59" value="0" placeholder="sec" />
+    </div>
 
     <div id="timer">25:00</div>
 
