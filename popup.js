@@ -11,6 +11,15 @@ const timerDisplay = document.getElementById('timer');
 
 let isWork = true;
 
+// Debounce helper function
+function debounce(func, delay) {
+  let timeoutId;
+  return function(...args) {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => func.apply(this, args), delay);
+  };
+}
+
 function getDuration() {
   const workMinutes = parseInt(workMinutesInput.value) || 0;
   const workSeconds = parseInt(workSecondsInput.value) || 0;
@@ -60,6 +69,7 @@ chrome.runtime.onMessage.addListener((request) => {
     alert(isWork ? "Work time! Let's focus." : "Break time! Relax a bit.");
   }
 });
+
 function requestTimeLeft() {
   chrome.runtime.sendMessage({ command: 'getTimeLeft' }, (response) => {
     if (response && typeof response.timeLeft === 'number') {
@@ -68,6 +78,24 @@ function requestTimeLeft() {
     }
   });
 }
+
+const inputs = [
+  workMinutesInput,
+  workSecondsInput,
+  breakMinutesInput,
+  breakSecondsInput
+];
+
+const debouncedReset = debounce(() => {
+  const durations = getDuration();
+  const duration = isWork ? durations.workDuration : durations.breakDuration;
+  chrome.runtime.sendMessage({ command: 'reset', duration, isWork });
+  updateTimerDisplay(duration);
+}, 500);
+
+inputs.forEach(input => {
+  input.addEventListener('input', debouncedReset);
+});
 
 // Update timer display every second
 setInterval(requestTimeLeft, 1000);
