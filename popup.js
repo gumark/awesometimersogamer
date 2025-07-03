@@ -60,3 +60,17 @@ chrome.runtime.onMessage.addListener((request) => {
     alert(isWork ? "Work time! Let's focus." : "Break time! Relax a bit.");
   }
 });
+function requestTimeLeft() {
+  chrome.runtime.sendMessage({ command: 'getTimeLeft' }, (response) => {
+    if (response && typeof response.timeLeft === 'number') {
+      updateTimerDisplay(response.timeLeft);
+      isWork = response.isWork;
+    }
+  });
+}
+
+// Update timer display every second
+setInterval(requestTimeLeft, 1000);
+
+// Also request time immediately on popup load
+requestTimeLeft();

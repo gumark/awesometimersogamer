@@ -66,4 +66,8 @@ function showNotification(message) {
     title: "Pomodoro Timer",
     message,
   });
+  
+if (request.command === 'getTimeLeft') {
+    sendResponse({ timeLeft, isWork });
+  }
 }
