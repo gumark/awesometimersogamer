@@ -1,20 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Pomodoro Timer</title>
-<link rel="stylesheet" href="styles.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pomodoro Timer</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <div class="container">
     <h1>Pomodoro Timer</h1>
 
     <label for="workTime">Work (minutes):</label>
-    <input id="workTime" type="number" min="1" max="180" value="25" />
+    <input id="workTime" type="number" min="0" max="180" value="25" />
+    <label for="workSeconds">Work (seconds):</label>
+    <input id="workSeconds" type="number" min="0" max="59" value="0" />
 
     <label for="breakTime">Break (minutes):</label>
-    <input id="breakTime" type="number" min="1" max="60" value="5" />
+    <input id="breakTime" type="number" min="0" max="60" value="5" />
+    <label for="breakSeconds">Break (seconds):</label>
+    <input id="breakSeconds" type="number" min="0" max="59" value="0" />
 
     <div id="timer">25:00</div>
 
@@ -25,6 +29,6 @@
     </div>
   </div>
 
-<script src="popup.js"></script>
+  <script src="popup.js"></script>
 </body>
 </html>

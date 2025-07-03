@@ -4,7 +4,7 @@ body {
   color: #333;
   margin: 0;
   padding: 20px;
-  width: 230px;
+  width: 260px;
   user-select: none;
 }
 
@@ -21,16 +21,18 @@ label {
   display: block;
   margin-top: 12px;
   font-weight: 600;
+  text-align: left;
 }
 
 input[type="number"] {
-  width: 70px;
+  width: 60px;
   padding: 6px;
   margin-top: 5px;
   font-size: 16px;
   border: 1px solid #aaa;
   border-radius: 4px;
   text-align: center;
+  margin-right: 10px;
 }
 
 #timer {
@@ -38,6 +40,10 @@ input[type="number"] {
   margin: 20px 0;
   font-weight: 700;
   color: #d33f49;
+}
+
+.buttons {
+  margin-top: 15px;
 }
 
 .buttons button {

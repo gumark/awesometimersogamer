@@ -1,5 +1,8 @@
-const workInput = document.getElementById('workTime');
-const breakInput = document.getElementById('breakTime');
+const workMinutesInput = document.getElementById('workTime');
+const workSecondsInput = document.getElementById('workSeconds');
+const breakMinutesInput = document.getElementById('breakTime');
+const breakSecondsInput = document.getElementById('breakSeconds');
+
 const timerDisplay = document.getElementById('timer');
 const startBtn = document.getElementById('start');
 const pauseBtn = document.getElementById('pause');
@@ -8,7 +11,19 @@ const resetBtn = document.getElementById('reset');
 let timer = null;
 let isRunning = false;
 let isWork = true;
-let timeLeft = parseInt(workInput.value) * 60;
+let timeLeft = 0;
+
+function getTimeFromInputs(minutesInput, secondsInput) {
+  const minutes = parseFloat(minutesInput.value) || 0;
+  const seconds = parseInt(secondsInput.value) || 0;
+  return Math.floor(minutes) * 60 + seconds;
+}
+
+function updateTimeLeft() {
+  timeLeft = isWork
+    ? getTimeFromInputs(workMinutesInput, workSecondsInput)
+    : getTimeFromInputs(breakMinutesInput, breakSecondsInput);
+}
 
 function updateTimerDisplay() {
   const minutes = Math.floor(timeLeft / 60);
@@ -16,14 +31,6 @@ function updateTimerDisplay() {
   timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds
     .toString()
     .padStart(2, '0')}`;
-}
-
-function switchMode() {
-  isWork = !isWork;
-  timeLeft = isWork ? parseInt(workInput.value) * 60 : parseInt(breakInput.value) * 60;
-  alert(isWork ? "Work time! Let's focus." : 'Break time! Relax a bit.');
-  updateTimerDisplay();
-  startTimer();
 }
 
 function tick() {
@@ -39,6 +46,11 @@ function tick() {
 
 function startTimer() {
   if (!isRunning) {
+    updateTimeLeft();
+    if (timeLeft <= 0) {
+      alert("Please set a time greater than 0.");
+      return;
+    }
     isRunning = true;
     timer = setInterval(tick, 1000);
   }
@@ -54,12 +66,21 @@ function pauseTimer() {
 function resetTimer() {
   clearInterval(timer);
   isRunning = false;
-  timeLeft = isWork ? parseInt(workInput.value) * 60 : parseInt(breakInput.value) * 60;
+  updateTimeLeft();
   updateTimerDisplay();
+}
+
+function switchMode() {
+  isWork = !isWork;
+  updateTimeLeft();
+  alert(isWork ? "Work time! Let's focus." : "Break time! Relax a bit.");
+  updateTimerDisplay();
+  startTimer();
 }
 
 startBtn.addEventListener('click', startTimer);
 pauseBtn.addEventListener('click', pauseTimer);
 resetBtn.addEventListener('click', resetTimer);
 
+updateTimeLeft();
 updateTimerDisplay();
